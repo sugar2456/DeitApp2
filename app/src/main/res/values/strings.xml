@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">DeitApp2</string>
+    <string name="weight">体重</string>
+    <string name="weight_input_label"><font size="12">体重を入力してください</font></string>
+    <string name="body_fat">体脂肪</string>
+    <string name="body_fat_input_label"><font size="12">体脂肪を入力してください</font></string>
+    <string name="bmi">BMI</string>
+    <string name="bmi_input_label"><font size="12">BMIを入力してください</font></string>
+    <string name="basal_metabolism">基礎代謝</string>
+    <string name="basal_metabolism_input_label"><font size="12">基礎代謝を入力してください</font></string>
+    <string name="send_label">送信</string>
+    <string name="send_result">結果</string>
+    <string name="send_result_content">未送信</string>
+</resources>

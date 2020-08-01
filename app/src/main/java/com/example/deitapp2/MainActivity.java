@@ -43,27 +43,9 @@ public class MainActivity extends AppCompatActivity {
                 new AsyncTask<Void, Void, Void>() {
                     @Override
                     public Void doInBackground(Void... params) {
-                        try {
-                            URL url = new URL("http://10.0.2.2:3000/data");
-                            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                            connection.setRequestMethod("POST");
-                            connection.setRequestProperty("Content-Type", "application/json");
-                            connection.setRequestProperty("Accept", "application/json");
-                            connection.setDoInput(true);
-                            connection.setDoOutput(true);
-                            connection.getOutputStream().write("POST DATA".getBytes("UTF-8"));
-                            connection.getOutputStream().flush();
-                            final int status = connection.getResponseCode();
-                            String message = "";
-                            if (status == HttpURLConnection.HTTP_OK) {
-                                message = "HTTP_OK";
-                            } else {
-                                message = "status=" + String.valueOf(status);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
+                        HttpSendJson httpSendJson = new HttpSendJson();
+                        String result = httpSendJson.callPost("http://10.0.2.2:8090/data", json.toString());
+                        System.out.println(result);
                         return null;
                     }
                 }.execute();

@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 5;
+    private static final int NUM_PAGES = 3;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -68,6 +68,16 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
+            switch(position) {
+                case 0:
+                    return new InputPageFragment();
+                case 1:
+                    // TODO graph shows
+                    return new InputPageFragment();
+                case 2:
+                    // TODO
+                    return new InputPageFragment();
+            }
             return new InputPageFragment();
         }
 

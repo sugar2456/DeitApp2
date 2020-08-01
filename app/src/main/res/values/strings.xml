@@ -11,4 +11,5 @@
     <string name="send_label">送信</string>
     <string name="send_result">結果</string>
     <string name="send_result_content">未送信</string>
+    <string name="response">response</string>
 </resources>

@@ -18,7 +18,7 @@ public class InputPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(
+        final ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_input, container, false);
 
         final EditText weight = (EditText) rootView.findViewById(R.id.input_weight);
@@ -38,14 +38,14 @@ public class InputPageFragment extends Fragment {
                     json.put("metabolism", metabolism.getText());
                     result.setText(json.toString());
                 } catch (org.json.JSONException e) {
-
+                    // TODO 適切なExceptionを作成する
                 }
                 new AsyncTask<Void, Void, Void>() {
                     @Override
                     public Void doInBackground(Void... params) {
                         HttpSendJson httpSendJson = new HttpSendJson();
-                        String result = httpSendJson.callPost("http://10.0.2.2:8090/data", json.toString());
-                        System.out.println(result);
+                        String response = httpSendJson.callPost("http://10.0.2.2:8090/data", json.toString());
+                        System.out.println(response);
                         return null;
                     }
                 }.execute();

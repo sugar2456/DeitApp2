@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     return new InputPageFragment();
                 case 1:
                     // TODO graph shows
-                    return new InputPageFragment();
+                    return new GraphPageFragment();
                 case 2:
                     // TODO
                     return new InputPageFragment();

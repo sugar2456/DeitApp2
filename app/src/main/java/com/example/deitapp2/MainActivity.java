@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
@@ -21,6 +23,10 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class MainActivity extends AppCompatActivity {
+    /**
+     * firebase
+     */
+    private FirebaseAnalytics mFirebaseAnalytics;
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
@@ -40,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        // Obtain the FirebaseAnalytics instance.
+//        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+//        Bundle bundle = new Bundle();
+//        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "");
+//        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());

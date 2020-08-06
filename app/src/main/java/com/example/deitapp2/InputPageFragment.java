@@ -11,7 +11,13 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.json.JSONObject;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class InputPageFragment extends Fragment {
 
@@ -27,28 +33,26 @@ public class InputPageFragment extends Fragment {
         final EditText metabolism = (EditText) rootView.findViewById(R.id.input_metabolism);
         final TextView result = (TextView) rootView.findViewById(R.id.resultText);
         Button sendButton = (Button) rootView.findViewById(R.id.send_button);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference();
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final JSONObject json = new JSONObject();
-                try {
-                    json.put("weight", weight.getText());
-                    json.put("body_fat", body_fat.getText());
-                    json.put("bmi", bmi.getText());
-                    json.put("metabolism", metabolism.getText());
-                    result.setText(json.toString());
-                } catch (org.json.JSONException e) {
-                    // TODO 適切なExceptionを作成する
-                }
-                new AsyncTask<Void, Void, Void>() {
-                    @Override
-                    public Void doInBackground(Void... params) {
-                        HttpSendJson httpSendJson = new HttpSendJson();
-                        String response = httpSendJson.callPost("http://10.0.2.2:8090/data", json.toString());
-                        System.out.println(response);
-                        return null;
-                    }
-                }.execute();
+                Record record = new Record(weight.getText().toString(), body_fat.getText().toString(),
+                        bmi.getText().toString(), metabolism.getText().toString());
+                String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                myRef.child("users1").child(date).setValue(record);
+//                new AsyncTask<Void, Void, Void>() {
+//                    @Override
+//                    public Void doInBackground(Void... params) {
+//                        HttpSendJson httpSendJson = new HttpSendJson();
+//                        String response = httpSendJson.callPost("http://10.0.2.2:8090/data", json.toString());
+//                        System.out.println(response);
+//
+//
+//                        return null;
+//                    }
+//                }.execute();
             }
         });
         return rootView;

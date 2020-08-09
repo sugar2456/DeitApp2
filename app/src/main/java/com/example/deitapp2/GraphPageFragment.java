@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -16,8 +17,16 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GraphPageFragment extends Fragment {
     private LineChart mChart;
@@ -29,7 +38,7 @@ public class GraphPageFragment extends Fragment {
 
         mChart = rootView.findViewById(R.id.lineChart);
 
-        mChart.setDrawGridBackground(true);
+//        mChart.setDrawGridBackground(true);
 
         mChart.getDescription().setEnabled(true);
 
@@ -57,53 +66,71 @@ public class GraphPageFragment extends Fragment {
     }
 
     private void setData() {
+        // Get a reference to our posts
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("users/" + user.getUid());
+        final ArrayList<Record> recordList = new ArrayList<>();
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshotItem: snapshot.getChildren()) {
+                    Record record = snapshotItem.getValue(Record.class);
+                    recordList.add(record);
+                }
+                ArrayList<Entry> entries = new ArrayList<>();
+                for (int i = 0; i < recordList.size(); i++) {
+                    entries.add(new Entry(i, Float.parseFloat(recordList.get(i).weight), null, null));
+                }
+
+                LineDataSet set1;
+
+                if (mChart.getData() != null &&
+                        mChart.getData().getDataSetCount() > 0) {
+                    set1 = (LineDataSet) mChart.getData().getDataSetByIndex(0);
+                    set1.setValues(entries);
+                    mChart.getData().notifyDataChanged();
+                    mChart.notifyDataSetChanged();
+                } else {
+                    // create a dataset and give it a type
+                    set1 = new LineDataSet(entries, "DataSet");
+
+                    set1.setDrawIcons(false);
+                    set1.setColor(Color.BLACK);
+                    set1.setCircleColor(Color.BLACK);
+                    set1.setLineWidth(1f);
+                    set1.setCircleRadius(3f);
+                    set1.setDrawCircleHole(false);
+                    set1.setValueTextSize(0f);
+                    set1.setDrawFilled(true);
+                    set1.setFormLineWidth(1f);
+                    set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
+                    set1.setFormSize(15.f);
+
+                    set1.setFillColor(Color.BLUE);
+
+                    ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+                    dataSets.add(set1); // add the datasets
+
+                    // create a list object with the datasets
+                    LineData lineData = new LineData(dataSets);
+
+                    // set list
+                    mChart.setData(lineData);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         // Entry()を使ってLineDataSetに設定できる形に変更してarrayを新しく作成
-        int data[] = {116, 111, 112, 121, 102, 83,
+        int list[] = {116, 111, 112, 121, 102, 83,
                 99, 101, 74, 105, 120, 112,
                 109, 102, 107, 93, 82, 99, 110,
         };
 
-        ArrayList<Entry> values = new ArrayList<>();
 
-        for (int i = 0; i < data.length; i++) {
-            values.add(new Entry(i, data[i], null, null));
-        }
-
-        LineDataSet set1;
-
-        if (mChart.getData() != null &&
-                mChart.getData().getDataSetCount() > 0) {
-
-            set1 = (LineDataSet) mChart.getData().getDataSetByIndex(0);
-            set1.setValues(values);
-            mChart.getData().notifyDataChanged();
-            mChart.notifyDataSetChanged();
-        } else {
-            // create a dataset and give it a type
-            set1 = new LineDataSet(values, "DataSet");
-
-            set1.setDrawIcons(false);
-            set1.setColor(Color.BLACK);
-            set1.setCircleColor(Color.BLACK);
-            set1.setLineWidth(1f);
-            set1.setCircleRadius(3f);
-            set1.setDrawCircleHole(false);
-            set1.setValueTextSize(0f);
-            set1.setDrawFilled(true);
-            set1.setFormLineWidth(1f);
-            set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
-            set1.setFormSize(15.f);
-
-            set1.setFillColor(Color.BLUE);
-
-            ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-            dataSets.add(set1); // add the datasets
-
-            // create a data object with the datasets
-            LineData lineData = new LineData(dataSets);
-
-            // set data
-            mChart.setData(lineData);
-        }
     }
 }

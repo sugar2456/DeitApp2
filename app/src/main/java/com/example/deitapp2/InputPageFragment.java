@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -35,13 +38,15 @@ public class InputPageFragment extends Fragment {
         Button sendButton = (Button) rootView.findViewById(R.id.send_button);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference();
+
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Record record = new Record(weight.getText().toString(), body_fat.getText().toString(),
                         bmi.getText().toString(), metabolism.getText().toString());
                 String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                myRef.child("users1").child(date).setValue(record);
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                myRef.child("users").child(user.getUid()).child(date).setValue(record);
 //                new AsyncTask<Void, Void, Void>() {
 //                    @Override
 //                    public Void doInBackground(Void... params) {

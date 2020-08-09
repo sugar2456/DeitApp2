@@ -3,15 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/firebaseUIFragment">
-    <fragment
-        android:id="@+id/firebaseUIFragment"
-        android:name="com.example.deitapp2.FirebaseUIFragment"
-        android:label="FirebaseUIFragment" >
-        <action
-            android:id="@+id/action_firebaseUIFragment_to_swipeFragment"
-            app:destination="@id/swipeFragment" />
-    </fragment>
+    app:startDestination="@id/swipeFragment">
     <fragment
         android:id="@+id/swipeFragment"
         android:name="com.example.deitapp2.SwipeFragment"

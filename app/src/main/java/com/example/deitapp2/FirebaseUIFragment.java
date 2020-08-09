@@ -31,19 +31,19 @@ import static com.firebase.ui.auth.AuthUI.TAG;
 
 public class FirebaseUIFragment extends Fragment {
 //    private static final int RC_SIGN_IN = 123;
-    private FirebaseAuth mAuth;
+//    private FirebaseAuth mAuth;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-    }
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        mAuth = FirebaseAuth.getInstance();
+//    }
+//
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,14 +52,14 @@ public class FirebaseUIFragment extends Fragment {
                 R.layout.fragment_firebase_ui, container, false);
 
         Button authButton = (Button)rootView.findViewById(R.id.authButton);
-        authButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavDirections action = FirebaseUIFragmentDirections
-                        .actionFirebaseUIFragmentToSwipeFragment();
-                Navigation.findNavController(rootView).navigate(action);
-            }
-        });
+//        authButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                NavDirections action = FirebaseUIFragmentDirections
+//                        .actionFirebaseUIFragmentToSwipeFragment();
+//                Navigation.findNavController(rootView).navigate(action);
+//            }
+//        });
         return rootView;
     }
 

@@ -21,7 +21,7 @@ public class SwipeFragment extends Fragment {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 3;
+    private static final int NUM_PAGES = 4;
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
      * and next wizard steps.
@@ -109,15 +109,16 @@ public class SwipeFragment extends Fragment {
         public Fragment getItem(int position) {
             switch(position) {
                 case 0:
-                    return new InputPageFragment();
+                    return new WeightGraphFragment();
                 case 1:
-                    // TODO graph shows
-                    return new GraphPageFragment();
+                    return new BodyFatGraphFragment();
                 case 2:
-                    // TODO
-                    return new InputPageFragment();
+                    return new MBIGraphFragment();
+                case 3:
+                    return new MetabolismGraphFragment();
             }
-            return new InputPageFragment();
+            // 本来ならこの画面は表示されない
+            return new WeightGraphFragment();
         }
 
         @Override

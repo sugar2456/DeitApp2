@@ -9,6 +9,7 @@
     <string name="basal_metabolism">基礎代謝</string>
     <string name="basal_metabolism_input_label"><font size="12">基礎代謝を入力してください</font></string>
     <string name="send_label">送信</string>
+    <string name="show_record">記録</string>
     <string name="send_result">結果</string>
     <string name="send_result_content">未送信</string>
     <string name="response">response</string>

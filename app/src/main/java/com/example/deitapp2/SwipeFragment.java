@@ -113,7 +113,7 @@ public class SwipeFragment extends Fragment {
                 case 1:
                     return new BodyFatGraphFragment();
                 case 2:
-                    return new MBIGraphFragment();
+                    return new BMIGraphFragment();
                 case 3:
                     return new MetabolismGraphFragment();
             }

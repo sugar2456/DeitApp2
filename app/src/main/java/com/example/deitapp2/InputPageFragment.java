@@ -45,6 +45,25 @@ public class InputPageFragment extends Fragment {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean retFlag = false;
+                if (weight.getText().toString().isEmpty()) {
+                    weight.setError("この入力項目は必須です。");
+                    retFlag = true;
+                }
+                if (body_fat.getText().toString().isEmpty()) {
+                    body_fat.setError("この入力項目は必須です。");
+                    retFlag = true;
+                }
+                if (bmi.getText().toString().isEmpty()) {
+                    bmi.setError("この入力項目は必須です。");
+                    retFlag = true;
+                }
+                if (metabolism.getText().toString().isEmpty()) {
+                    metabolism.setError("この入力項目は必須です。");
+                    retFlag = true;
+                }
+                if (retFlag) return;
+
                 Record record = new Record(weight.getText().toString(), body_fat.getText().toString(),
                         bmi.getText().toString(), metabolism.getText().toString());
                 String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));

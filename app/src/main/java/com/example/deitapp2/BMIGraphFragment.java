@@ -28,15 +28,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MetabolismGraphFragment extends Fragment {
+public class BMIGraphFragment extends Fragment {
     private LineChart mChart;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final ViewGroup rootView = (ViewGroup) inflater.inflate(
-                R.layout.fragment_metabolism_graph, container, false);
+                R.layout.fragment_mbi_graph, container, false);
 
-        mChart = rootView.findViewById(R.id.MetabolismLineChart);
+        mChart = rootView.findViewById(R.id.BMILineChart);
         mChart.getDescription().setEnabled(true);
 
         // Grid縦軸を破線
@@ -46,7 +46,7 @@ public class MetabolismGraphFragment extends Fragment {
 
         YAxis leftAxis = mChart.getAxisLeft();
         // Y軸最大最小設定
-        leftAxis.setAxisMaximum(2000f);
+        leftAxis.setAxisMaximum(50f);
         leftAxis.setAxisMinimum(0f);
         // Grid横軸を破線
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
@@ -61,6 +61,7 @@ public class MetabolismGraphFragment extends Fragment {
         mChart.animateX(2500);
         return rootView;
     }
+
     private void setData() {
         // Get a reference to our posts
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -77,7 +78,7 @@ public class MetabolismGraphFragment extends Fragment {
                 }
                 ArrayList<Entry> entries = new ArrayList<>();
                 for (int i = 0; i < recordList.size(); i++) {
-                    entries.add(new Entry(i, Float.parseFloat(recordList.get(i).metabolism), null, null));
+                    entries.add(new Entry(i, Float.parseFloat(recordList.get(i).BMI), null, null));
                 }
 
                 LineDataSet set1;
@@ -90,7 +91,7 @@ public class MetabolismGraphFragment extends Fragment {
                     mChart.notifyDataSetChanged();
                 } else {
                     // create a dataset and give it a type
-                    set1 = new LineDataSet(entries, "Metabolism");
+                    set1 = new LineDataSet(entries, "BMI");
                     set1.setDrawIcons(true);
                     set1.setColor(Color.BLUE);
                     set1.setCircleColor(Color.BLUE);

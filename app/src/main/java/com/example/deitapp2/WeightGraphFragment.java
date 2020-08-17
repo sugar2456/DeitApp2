@@ -48,7 +48,7 @@ public class WeightGraphFragment extends Fragment {
 
         YAxis leftAxis = mChart.getAxisLeft();
         // Y軸最大最小設定
-        leftAxis.setAxisMaximum(150f);
+        leftAxis.setAxisMaximum(100f);
         leftAxis.setAxisMinimum(0f);
         // Grid横軸を破線
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
@@ -93,22 +93,19 @@ public class WeightGraphFragment extends Fragment {
                     mChart.notifyDataSetChanged();
                 } else {
                     // create a dataset and give it a type
-                    set1 = new LineDataSet(entries, "DataSet");
-                    set1.setHighlightEnabled(false);
+                    set1 = new LineDataSet(entries, "Weight");
                     set1.setDrawIcons(true);
-                    set1.setColor(Color.BLACK);
-                    set1.setCircleColor(Color.BLACK);
+                    set1.setColor(Color.BLUE);
+                    set1.setCircleColor(Color.BLUE);
 
                     set1.setLineWidth(1f);
                     set1.setCircleRadius(3f);
                     set1.setDrawCircleHole(false);
                     set1.setValueTextSize(0f);
-                    set1.setDrawFilled(true);
+//                    set1.setDrawFilled(true);
                     set1.setFormLineWidth(1f);
                     set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
                     set1.setFormSize(15.f);
-
-                    set1.setFillColor(Color.BLUE);
 
                     ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
                     dataSets.add(set1); // add the datasets
@@ -126,12 +123,5 @@ public class WeightGraphFragment extends Fragment {
 
             }
         });
-        // Entry()を使ってLineDataSetに設定できる形に変更してarrayを新しく作成
-        int list[] = {116, 111, 112, 121, 102, 83,
-                99, 101, 74, 105, 120, 112,
-                109, 102, 107, 93, 82, 99, 110,
-        };
-
-
     }
 }

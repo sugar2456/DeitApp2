@@ -3,7 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/swipeFragment">
+    app:startDestination="@id/inputPageFragment">
+    <fragment
+        android:id="@+id/inputPageFragment"
+        android:name="com.example.deitapp2.InputPageFragment"
+        android:label="InputPageFragment" >
+        <action
+            android:id="@+id/action_inputPageFragment_to_swipeFragment"
+            app:destination="@id/swipeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/swipeFragment"
         android:name="com.example.deitapp2.SwipeFragment"

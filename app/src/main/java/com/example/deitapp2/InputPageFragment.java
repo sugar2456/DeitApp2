@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,28 +38,44 @@ public class InputPageFragment extends Fragment {
         final EditText metabolism = (EditText) rootView.findViewById(R.id.input_metabolism);
         final TextView result = (TextView) rootView.findViewById(R.id.resultText);
         Button sendButton = (Button) rootView.findViewById(R.id.send_button);
+        Button showRecordButton = (Button) rootView.findViewById(R.id.record_button);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference();
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean retFlag = false;
+                if (weight.getText().toString().isEmpty()) {
+                    weight.setError("この入力項目は必須です。");
+                    retFlag = true;
+                }
+                if (body_fat.getText().toString().isEmpty()) {
+                    body_fat.setError("この入力項目は必須です。");
+                    retFlag = true;
+                }
+                if (bmi.getText().toString().isEmpty()) {
+                    bmi.setError("この入力項目は必須です。");
+                    retFlag = true;
+                }
+                if (metabolism.getText().toString().isEmpty()) {
+                    metabolism.setError("この入力項目は必須です。");
+                    retFlag = true;
+                }
+                if (retFlag) return;
+
                 Record record = new Record(weight.getText().toString(), body_fat.getText().toString(),
                         bmi.getText().toString(), metabolism.getText().toString());
                 String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 myRef.child("users").child(user.getUid()).child(date).setValue(record);
-//                new AsyncTask<Void, Void, Void>() {
-//                    @Override
-//                    public Void doInBackground(Void... params) {
-//                        HttpSendJson httpSendJson = new HttpSendJson();
-//                        String response = httpSendJson.callPost("http://10.0.2.2:8090/data", json.toString());
-//                        System.out.println(response);
-//
-//
-//                        return null;
-//                    }
-//                }.execute();
+            }
+        });
+        showRecordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavDirections action = InputPageFragmentDirections.actionInputPageFragmentToSwipeFragment();
+                Navigation.findNavController(v).navigate(action);
             }
         });
         return rootView;
